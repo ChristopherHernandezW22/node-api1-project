@@ -79,21 +79,21 @@ server.delete('/users/:id', (req, res) => {
         })
 })
 
-server.put('/user/:id', (req, res) => {
-    const id = req.params.id;
+// server.put('/user/:id', (req, res) => {
+//     const id = req.params.id;
 
-    db.update(id)
-        .then(user => {
-            res.status(201)
-            .json(user)
-        })
-        .catch(error => {
-            console.log('error on PUT /users/:id', error);
-            res
-                .status(500)
-                .json({ errorMessage: "error updating the user" });
-        })
-})
+//     db.update(id)
+//         .then(user => {
+//             res.status(201)
+//             .json(user)
+//         })
+//         .catch(error => {
+//             console.log('error on PUT /users/:id', error);
+//             res
+//                 .status(500)
+//                 .json({ errorMessage: "error updating the user" });
+//         })
+// })
 
 server.put(`/api/users/:id`, (req, res) => {
     const { id } = req.params;
