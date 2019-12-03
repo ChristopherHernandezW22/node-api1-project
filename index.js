@@ -79,50 +79,51 @@ server.delete('/users/:id', (req, res) => {
         })
 })
 
-// server.put('/user/:id', (req, res) => {
-//     const id = req.params.id;
+server.put('/user/:id', (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
 
-//     db.update(id)
-//         .then(user => {
-//             res.status(201)
-//             .json(user)
-//         })
-//         .catch(error => {
-//             console.log('error on PUT /users/:id', error);
-//             res
-//                 .status(500)
-//                 .json({ errorMessage: "error updating the user" });
-//         })
-// })
-
-server.put(`/api/users/:id`, (req, res) => {
-    const { id } = req.params;
-    const { name, bio } = req.body;
-    if(!name && !bio){
-        res
-            .status(400)
-            .json({error:"Error."})
-    }
-    db.update(id, { name, bio })
-        .then(updated => {
-            if(updated) {
-                db.findById(id)
-                    .then(user => res
-                        .status(200)
-                        .json(user))
-                    .catch(error => {
-                        console.log(error);
-                        res
-                            .status(500)
-                            .json({error: "error updating the user"})
-                    })
-            } else {
-                res
-                    .status(404)
-                    .json({message:"user does not exist"})
-            }
+    db.update(id, body)
+        .then(user => {
+            res.status(201)
+            .json(user)
         })
-});
+        .catch(error => {
+            console.log('error on PUT /users/:id', error);
+            res
+                .status(500)
+                .json({ errorMessage: "error updating the user" });
+        })
+})
+
+// server.put(`/api/users/:id`, (req, res) => {
+//     const { id } = req.params;
+//     const { name, bio } = req.body;
+//     if(!name && !bio){
+//         res
+//             .status(400)
+//             .json({error:"Error."})
+//     }
+//     db.update(id, { name, bio })
+//         .then(updated => {
+//             if(updated) {
+//                 db.findById(id)
+//                     .then(user => res
+//                         .status(200)
+//                         .json(user))
+//                     .catch(error => {
+//                         console.log(error);
+//                         res
+//                             .status(500)
+//                             .json({error: "error updating the user"})
+//                     })
+//             } else {
+//                 res
+//                     .status(404)
+//                     .json({message:"user does not exist"})
+//             }
+//         })
+// });
 
 const port = 5000
 server.listen(port, () =>
